@@ -30,12 +30,12 @@ A full-stack weather application built as an Nx monorepo. Features a NestJS Back
 - **WCAG 2.1 AA accessibility** — `role="tab"` keyboard nav, `aria-live` region for weather updates, visible focus indicators (`focus-visible` ring), per-item remove `aria-label`s
 - **Server-side API keys** — OpenWeather and GeoApify keys never sent to the browser
 - **Caching** — weather data cached 10 min, forecasts cached 30 min on the backend
-- **Rate limiting** — 30 req/min global, 20 req/min per weather/forecast/geocode endpoint
+- **Rate limiting** — 100 req/min global, 100 req/min per weather/forecast/geocode endpoint
 - **Health monitoring** — `/api/health` endpoint with cache metrics (hit rate, misses, API calls)
 
 ## Prerequisites
 
-- Node.js 20+
+- Node.js 24+ (use `nvm use 24` if you have nvm; a `.nvmrc` is provided)
 - Docker and Docker Compose (for production / E2E testing)
 - An [OpenWeather API key](https://openweathermap.org/api) (free tier works)
 - A [GeoApify API key](https://www.geoapify.com) (free tier — 3,000 req/day)
@@ -125,7 +125,7 @@ cd e2e && npx playwright install chromium
 npx playwright test
 ```
 
-15 E2E scenarios covered:
+28 E2E scenarios covered:
 - Search valid city shows weather card
 - Search invalid city shows error alert
 - Empty search shows validation message
@@ -141,13 +141,26 @@ npx playwright test
 - Selecting autocomplete suggestion loads weather
 - Selected location appears in recents with human-readable label
 - Pressing Escape closes dropdown without searching
+- ArrowDown highlights first autocomplete option
+- ArrowDown then Enter loads weather for highlighted option
+- Autocomplete shows "No results found" for unmatched query
+- Remove individual recent search
+- Clear all recent searches
+- Clicking a recent search loads weather for that location
+- Recent searches persist after page reload
+- Unit preference persists after page reload
+- Dark mode persists after page reload
+- Hourly forecast strip shows Time column header
+- 5-Day forecast cards show temperature values
+- ArrowRight keyboard navigation switches from Next 24h to 5-Day tab
+- Last searched location is restored automatically after page reload
 
 ## CI
 
 GitHub Actions runs on every push to `main` and on all pull requests:
 
-1. **Unit tests** — `npm test` against Node 20
-2. **E2E tests** — builds the Docker staging stack, runs all 15 Playwright scenarios, tears down
+1. **Unit tests** — `npm test` against Node 24
+2. **E2E tests** — builds the Docker staging stack, runs all 28 Playwright scenarios, tears down
 
 To enable E2E tests in CI, add these repository secrets in **GitHub → Settings → Secrets and variables → Actions**:
 - `OPENWEATHER_API_KEY`
@@ -182,7 +195,7 @@ parletto/
 │   ├── external-apis.md            # OpenWeather + GeoApify integration docs
 │   ├── environment-variables.md    # Env vars by stage (dev, staging, production)
 │   └── requirements/               # Tracked requirements with checkbox status
-├── e2e/                            # Playwright E2E tests (15 scenarios)
+├── e2e/                            # Playwright E2E tests (28 scenarios)
 ├── docker-compose.yml
 └── .env.example
 ```

@@ -220,6 +220,15 @@ test.describe('Weather App', () => {
     await expect(page.getByText(/\d+°[FC]/).first()).toBeVisible();
   });
 
+  test('last searched location is restored automatically after page reload', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
+    await page.reload();
+    await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText(/Search for a city to get started/i)).not.toBeVisible();
+  });
+
   test('ArrowRight keyboard navigation switches from Next 24h to 5-Day tab', async ({ page }) => {
     await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
