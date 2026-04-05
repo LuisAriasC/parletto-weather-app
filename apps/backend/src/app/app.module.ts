@@ -14,7 +14,7 @@ import { RequestIdMiddleware } from '../common/middleware/request-id.middleware'
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     CacheModule.register({ isGlobal: true }),
-    ThrottlerModule.forRoot([{ ttl: 60_000, limit: 30 }]),
+    ThrottlerModule.forRoot([{ ttl: 60_000, limit: 100 }]),
     WeatherModule,
     GeocodeModule,
   ],

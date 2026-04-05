@@ -151,7 +151,7 @@ test.describe('Weather App', () => {
   test('remove individual recent search', async ({ page }) => {
     await page.fill('input[placeholder*="Search"]', 'Austin, TX');
     await page.press('input[placeholder*="Search"]', 'Enter');
-    await expect(page.getByRole('button', { name: 'Austin, TX' })).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).toBeVisible({ timeout: 10_000 });
     await page.click('button[aria-label="Remove Austin, TX from recent searches"]');
     await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).not.toBeVisible();
   });
@@ -159,30 +159,30 @@ test.describe('Weather App', () => {
   test('clear all recent searches', async ({ page }) => {
     await page.fill('input[placeholder*="Search"]', 'Austin, TX');
     await page.press('input[placeholder*="Search"]', 'Enter');
-    await expect(page.getByRole('button', { name: 'Austin, TX' })).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).toBeVisible({ timeout: 10_000 });
     await page.click('button[aria-label="Clear search history"]');
     await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).not.toBeVisible();
   });
 
   test('clicking a recent search loads weather for that location', async ({ page }) => {
-    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
     await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
 
-    await page.fill('input[placeholder*="Search"]', 'Chicago, IL');
+    await page.fill('input[placeholder*="Search"]', 'Chicago');
     await page.press('input[placeholder*="Search"]', 'Enter');
     await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
 
-    await page.getByRole('button', { name: 'Austin, TX' }).first().click();
+    await page.getByRole('button', { name: 'Austin', exact: true }).click();
     await expect(page.getByText(/Austin/i)).toBeVisible({ timeout: 10_000 });
   });
 
   test('recent searches persist after page reload', async ({ page }) => {
     await page.fill('input[placeholder*="Search"]', 'Austin, TX');
     await page.press('input[placeholder*="Search"]', 'Enter');
-    await expect(page.getByRole('button', { name: 'Austin, TX' })).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).toBeVisible({ timeout: 10_000 });
     await page.reload();
-    await expect(page.getByRole('button', { name: 'Austin, TX' })).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).toBeVisible({ timeout: 5_000 });
   });
 
   test('unit preference persists after page reload', async ({ page }) => {

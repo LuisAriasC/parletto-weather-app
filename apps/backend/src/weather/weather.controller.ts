@@ -12,7 +12,7 @@ export class WeatherController {
   constructor(private readonly weatherService: WeatherService) {}
 
   @Get('weather')
-  @Throttle({ default: { ttl: 60_000, limit: 20 } })
+  @Throttle({ default: { ttl: 60_000, limit: 100 } })
   @ApiOperation({ summary: 'Get current weather for a location' })
   @ApiQuery({ name: 'location', description: 'City name (e.g. "Austin") or lat,lon (e.g. "30.27,-97.74")', required: true })
   @ApiQuery({ name: 'units', enum: ['imperial', 'metric'], required: false })
@@ -25,7 +25,7 @@ export class WeatherController {
   }
 
   @Get('forecast')
-  @Throttle({ default: { ttl: 60_000, limit: 20 } })
+  @Throttle({ default: { ttl: 60_000, limit: 100 } })
   @ApiOperation({ summary: 'Get 5-day forecast for a location' })
   @ApiQuery({ name: 'location', description: 'City name (e.g. "Austin") or lat,lon (e.g. "30.27,-97.74")', required: true })
   @ApiQuery({ name: 'units', enum: ['imperial', 'metric'], required: false })
@@ -38,7 +38,7 @@ export class WeatherController {
   }
 
   @Get('forecast/hourly')
-  @Throttle({ default: { ttl: 60_000, limit: 20 } })
+  @Throttle({ default: { ttl: 60_000, limit: 100 } })
   @ApiOperation({ summary: 'Get 3-hour interval forecast (40 slots / 5 days)' })
   @ApiQuery({ name: 'location', required: true })
   @ApiQuery({ name: 'units', enum: ['imperial', 'metric'], required: false })
