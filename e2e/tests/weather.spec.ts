@@ -6,10 +6,10 @@ test.describe('Weather App', () => {
   });
 
   test('search valid city shows weather card', async ({ page }) => {
-    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
-    await expect(page.getByText(/Austin/i)).toBeVisible({ timeout: 10_000 });
-    await expect(page.getByText(/°F|°C/)).toBeVisible();
+    await expect(page.getByText('Austin, US')).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByRole('button', { name: 'Toggle temperature units' })).toBeVisible();
   });
 
   test('search invalid city shows error message', async ({ page }) => {
@@ -54,10 +54,10 @@ test.describe('Weather App', () => {
   });
 
   test('recent search appears in sidebar after search', async ({ page }) => {
-    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
-    await expect(page.getByText(/Austin, TX/)).toBeVisible({ timeout: 10_000 });
-    const recentButtons = page.getByRole('button', { name: 'Austin, TX' });
+    await expect(page.getByText('Austin, US')).toBeVisible({ timeout: 10_000 });
+    const recentButtons = page.getByRole('button', { name: 'Austin' });
     await expect(recentButtons.first()).toBeVisible();
   });
 
@@ -148,20 +148,27 @@ test.describe('Weather App', () => {
     await expect(page.getByText('No results found')).toBeVisible({ timeout: 5_000 });
   });
 
-  test('remove individual recent search', async ({ page }) => {
-    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+  test('invalid city is not added to recent searches', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'xyznotacity12345');
     await page.press('input[placeholder*="Search"]', 'Enter');
-    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).toBeVisible({ timeout: 10_000 });
-    await page.click('button[aria-label="Remove Austin, TX from recent searches"]');
-    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).not.toBeVisible();
+    await expect(page.getByRole('alert')).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByRole('button', { name: 'xyznotacity12345', exact: true })).not.toBeVisible();
+  });
+
+  test('remove individual recent search', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByRole('button', { name: 'Austin', exact: true })).toBeVisible({ timeout: 10_000 });
+    await page.click('button[aria-label="Remove Austin from recent searches"]');
+    await expect(page.getByRole('button', { name: 'Austin', exact: true })).not.toBeVisible();
   });
 
   test('clear all recent searches', async ({ page }) => {
-    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
-    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByRole('button', { name: 'Austin', exact: true })).toBeVisible({ timeout: 10_000 });
     await page.click('button[aria-label="Clear search history"]');
-    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).not.toBeVisible();
+    await expect(page.getByRole('button', { name: 'Austin', exact: true })).not.toBeVisible();
   });
 
   test('clicking a recent search loads weather for that location', async ({ page }) => {
@@ -178,11 +185,11 @@ test.describe('Weather App', () => {
   });
 
   test('recent searches persist after page reload', async ({ page }) => {
-    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
-    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByRole('button', { name: 'Austin', exact: true })).toBeVisible({ timeout: 10_000 });
     await page.reload();
-    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByRole('button', { name: 'Austin', exact: true })).toBeVisible({ timeout: 5_000 });
   });
 
   test('unit preference persists after page reload', async ({ page }) => {
@@ -236,5 +243,30 @@ test.describe('Weather App', () => {
     await page.getByRole('tab', { name: 'Next 24h' }).focus();
     await page.keyboard.press('ArrowRight');
     await expect(page.getByRole('tab', { name: '5-Day' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  test('clear button appears in search input after typing', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Aus');
+    await expect(page.getByRole('button', { name: 'Clear search input' })).toBeVisible();
+  });
+
+  test('clear button removes text from search input', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin');
+    await page.getByRole('button', { name: 'Clear search input' }).click();
+    await expect(page.locator('input[placeholder*="Search"]')).toHaveValue('');
+    await expect(page.getByRole('button', { name: 'Clear search input' })).not.toBeVisible();
+  });
+
+  test('search input clears after selecting an autocomplete suggestion', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Aus');
+    await expect(page.getByRole('listbox')).toBeVisible({ timeout: 5_000 });
+    await page.getByRole('option').first().click();
+    await expect(page.locator('input[placeholder*="Search"]')).toHaveValue('');
+  });
+
+  test('search input clears after pressing Enter to search', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.locator('input[placeholder*="Search"]')).toHaveValue('');
   });
 });

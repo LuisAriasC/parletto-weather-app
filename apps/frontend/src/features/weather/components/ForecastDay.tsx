@@ -1,4 +1,5 @@
 import { ForecastDto, Units } from '@parletto/shared';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface ForecastDayProps {
   data: ForecastDto;
@@ -10,19 +11,21 @@ export function ForecastDay({ data, units }: ForecastDayProps) {
   const dayLabel = new Date(data.date).toLocaleDateString('en-US', { weekday: 'short' });
 
   return (
-    <div className="flex flex-col items-center rounded-lg border border-gray-100 bg-white px-3 py-3 dark:border-gray-700 dark:bg-gray-800">
-      <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{dayLabel}</span>
-      <img
-        src={`https://openweathermap.org/img/wn/${data.conditionIcon}.png`}
-        alt={data.condition}
-        className="h-10 w-10"
-      />
-      <span className="text-sm font-semibold text-gray-900 dark:text-white">
-        {Math.round(data.high)}{unitSymbol}
-      </span>
-      <span className="text-xs text-gray-400">
-        {Math.round(data.low)}{unitSymbol}
-      </span>
-    </div>
+    <Card className="items-center gap-0">
+      <CardContent className="flex flex-col items-center gap-1 px-3 py-3">
+        <span className="text-xs font-medium text-muted-foreground">{dayLabel}</span>
+        <img
+          src={`https://openweathermap.org/img/wn/${data.conditionIcon}.png`}
+          alt={data.condition}
+          className="h-10 w-10"
+        />
+        <span className="text-sm font-semibold text-foreground">
+          {Math.round(data.high)}{unitSymbol}
+        </span>
+        <span className="text-xs text-muted-foreground">
+          {Math.round(data.low)}{unitSymbol}
+        </span>
+      </CardContent>
+    </Card>
   );
 }

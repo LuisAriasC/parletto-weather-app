@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
+import { X, AlertCircle } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../app/store';
 import { removeToast } from '../store/toastSlice';
+import { Button } from '@/components/ui/button';
 
 const AUTO_DISMISS_MS = 4000;
 
@@ -29,17 +31,20 @@ export function Toast() {
         <div
           key={m.id}
           role="alert"
-          className="pointer-events-auto flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 shadow-lg dark:border-red-800 dark:bg-red-950 dark:text-red-300"
+          className="pointer-events-auto flex items-center gap-3 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive shadow-lg backdrop-blur-sm"
         >
+          <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
           <span className="flex-1">{m.text}</span>
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
             onClick={() => dispatch(removeToast(m.id))}
             aria-label="Dismiss notification"
-            className="text-red-400 hover:text-red-600 dark:text-red-500 dark:hover:text-red-300"
+            className="h-6 w-6 text-destructive hover:bg-destructive/20 hover:text-destructive"
           >
-            ✕
-          </button>
+            <X className="h-3 w-3" aria-hidden="true" />
+          </Button>
         </div>
       ))}
     </div>

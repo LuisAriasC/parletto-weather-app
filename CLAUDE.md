@@ -54,12 +54,22 @@ The backend is a Backend-for-Frontend: API keys (OpenWeather + GeoApify) live on
 - **Redux Toolkit** for client-only UI state: `themeSlice` (dark/light), `settingsSlice` (imperial/metric), `searchSlice` (recent searches as `{ label, query, icon? }` objects, max 5), `toastSlice` (transient error notifications)
 - **React Query** for server state: `['weather', location, units]`, `['forecast', location, units]`, `['hourly', location, units]`, and `['geocode', query]` query keys
 
+### ShadCN UI
+This project uses ShadCN UI (new-york style). Key conventions:
+- Component primitives live in `apps/frontend/src/components/ui/` — edit them freely, they're not from a package
+- `cn()` utility lives in `apps/frontend/src/lib/utils.ts` (clsx + tailwind-merge)
+- `@` path alias resolves to `apps/frontend/src/` — configure in `vite.config.mts` and `tsconfig.base.json`
+- Add new ShadCN components with `npx shadcn@latest add <component>` from `apps/frontend/`
+
 ### Tailwind CSS v4
-This project uses Tailwind v4 — the syntax is different from v3:
+This project uses Tailwind v4 with a ShadCN CSS variable design system:
 - CSS: `@import "tailwindcss"` (not `@tailwind base/components/utilities`)
+- `@theme inline` maps semantic tokens (`--primary`, `--background`, etc.) to Tailwind color utilities
+- Design tokens defined in `:root` and `.dark` in `src/index.css` using oklch color values
 - Dark mode: `@variant dark (&:where(.dark, .dark *))` in CSS
 - PostCSS plugin: `@tailwindcss/postcss` (not `tailwindcss`)
-- No `tailwind.config.js` — configuration is in CSS
+- No `tailwind.config.js` — all configuration is in CSS
+- Use semantic class names (`bg-background`, `text-muted-foreground`, `border-border`) instead of hardcoded grays
 
 ## Critical Version Constraints
 
@@ -108,7 +118,10 @@ apps/
       geocode/        # GeocodeController, GeocodeService, DTOs
     vitest.config.ts  # Custom vitest with unplugin-swc
   frontend/
+    components.json   # ShadCN configuration
     src/
+      components/ui/  # ShadCN primitives: Button, Input, Card, Badge, Skeleton
+      lib/            # cn() utility (clsx + tailwind-merge)
       app/
         layout/       # Header, Sidebar, MainPanel
         store/        # Redux store setup
@@ -124,7 +137,7 @@ apps/
           services/   # weatherService (RxJS)
           utils/      # formatters (compass, visibility, pressure, precipitation, time)
       shared/
-        components/   # ErrorBoundary, ErrorMessage (+ retry), LoadingSpinner, WeatherSkeleton, ForecastSkeleton, Toast
+        components/   # ErrorBoundary, ErrorMessage (+ retry), WeatherSkeleton, ForecastSkeleton, Toast
         store/        # themeSlice, settingsSlice, toastSlice
     nginx.conf        # SPA fallback + /api proxy + security headers
     Dockerfile        # Multi-stage: node builder → nginx

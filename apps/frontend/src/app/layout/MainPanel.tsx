@@ -1,29 +1,33 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { CloudSun } from 'lucide-react';
 import { ErrorDto } from '@parletto/shared';
 import { RootState, AppDispatch } from '../store';
 import { CurrentWeather, ForecastPanel, useCurrentWeather } from '../../features/weather';
 import { ErrorMessage, WeatherSkeleton } from '../../shared/components';
-import { updateSearchIcon } from '../../features/search';
+import { addSearch, updateSearchIcon } from '../../features/search';
+import { LocationEntry } from '../app';
 
 interface MainPanelProps {
-  location: string;
+  locationEntry: LocationEntry | null;
 }
 
-export function MainPanel({ location }: MainPanelProps) {
+export function MainPanel({ locationEntry }: MainPanelProps) {
   const dispatch = useDispatch<AppDispatch>();
   const units = useSelector((s: RootState) => s.settings.units);
-  const weather = useCurrentWeather(location, units);
+  const weather = useCurrentWeather(locationEntry?.query ?? '', units);
 
   useEffect(() => {
-    if (weather.data && location) {
-      dispatch(updateSearchIcon({ query: location, icon: weather.data.conditionIcon }));
+    if (weather.data && locationEntry) {
+      dispatch(addSearch({ label: locationEntry.label, query: locationEntry.query }));
+      dispatch(updateSearchIcon({ query: locationEntry.query, icon: weather.data.conditionIcon }));
     }
-  }, [weather.data, location, dispatch]);
+  }, [weather.data, locationEntry, dispatch]);
 
-  if (!location) {
+  if (!locationEntry) {
     return (
-      <div className="flex min-h-full flex-col items-center justify-center text-gray-400 dark:text-gray-600">
+      <div className="flex min-h-full flex-col items-center justify-center gap-3 text-muted-foreground">
+        <CloudSun className="h-12 w-12 opacity-30" aria-hidden="true" />
         <p className="text-sm">Search for a city to get started.</p>
       </div>
     );
@@ -54,7 +58,7 @@ export function MainPanel({ location }: MainPanelProps) {
           : ''}
       </div>
       {weather.data && <CurrentWeather data={weather.data} />}
-      {location && <ForecastPanel location={location} units={units} />}
+      {locationEntry && <ForecastPanel location={locationEntry.query} units={units} />}
     </div>
   );
 }

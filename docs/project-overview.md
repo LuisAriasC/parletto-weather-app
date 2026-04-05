@@ -69,6 +69,8 @@ Parletto is an [Nx](https://nx.dev) monorepo with three packages:
 | GeoApify for geocoding | Chosen for its generous free tier and autocomplete-optimized endpoint |
 | RxJS end-to-end | Backend uses NestJS `HttpService` (Observables natively); frontend wraps axios in `from()` for consistency |
 | Redux for UI state, React Query for server state | Clean separation — Redux handles theme/units/recents; React Query handles caching, refetching, and staleness for API data |
-| Tailwind CSS v4 | Utility-first styling with CSS-native configuration (no `tailwind.config.js`) |
+| ShadCN UI (new-york style) | Accessible, unstyled-by-default Radix primitives composed with Tailwind — gives full design control without fighting a pre-styled component library |
+| Tailwind CSS v4 + CSS variable theming | `@theme inline` maps semantic design tokens (`--primary`, `--muted-foreground`, etc.) to Tailwind utilities, so ShadCN components and custom classes share one coherent palette |
+| Lucide React icons | Consistent, tree-shakeable SVG icon set that integrates natively with ShadCN's new-york style |
 | In-memory caching | Weather data cached 10 min, forecasts cached 30 min on the backend to reduce API calls |
 | localStorage persistence | Theme, units, and recent searches survive page reloads without a database |

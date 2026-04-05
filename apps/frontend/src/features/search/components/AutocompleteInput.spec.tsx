@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AutocompleteInput } from './AutocompleteInput';
@@ -101,6 +101,50 @@ describe('AutocompleteInput', () => {
     await userEvent.click(screen.getByPlaceholderText('Search city...'));
     await userEvent.keyboard('{Enter}');
     expect(onSelect).toHaveBeenCalledWith({ label: '', query: '' });
+  });
+
+  it('clear button is not visible when input is empty', () => {
+    render(<AutocompleteInput onSelect={vi.fn()} placeholder="Search city..." />, { wrapper });
+    expect(screen.queryByRole('button', { name: 'Clear search input' })).not.toBeInTheDocument();
+  });
+
+  it('clear button appears when input has text', async () => {
+    render(<AutocompleteInput onSelect={vi.fn()} placeholder="Search city..." />, { wrapper });
+    await userEvent.type(screen.getByPlaceholderText('Search city...'), 'Aus');
+    expect(screen.getByRole('button', { name: 'Clear search input' })).toBeInTheDocument();
+  });
+
+  it('clear button clears the input value', async () => {
+    render(<AutocompleteInput onSelect={vi.fn()} placeholder="Search city..." />, { wrapper });
+    await userEvent.type(screen.getByPlaceholderText('Search city...'), 'Austin');
+    const clearBtn = screen.getByRole('button', { name: 'Clear search input' });
+    fireEvent.mouseDown(clearBtn);
+    expect(screen.getByPlaceholderText('Search city...')).toHaveValue('');
+    expect(screen.queryByRole('button', { name: 'Clear search input' })).not.toBeInTheDocument();
+  });
+
+  it('input is cleared after selecting a suggestion from the dropdown', async () => {
+    vi.mocked(useGeocodeSuggestions).mockReturnValue({ data: mockSuggestions } as any);
+    render(<AutocompleteInput onSelect={vi.fn()} placeholder="Search city..." />, { wrapper });
+    await userEvent.type(screen.getByPlaceholderText('Search city...'), 'Aus');
+    await userEvent.click(screen.getByText('Austin, Texas, United States'));
+    expect(screen.getByPlaceholderText('Search city...')).toHaveValue('');
+  });
+
+  it('input is cleared after pressing Enter with a highlighted suggestion', async () => {
+    vi.mocked(useGeocodeSuggestions).mockReturnValue({ data: mockSuggestions } as any);
+    render(<AutocompleteInput onSelect={vi.fn()} placeholder="Search city..." />, { wrapper });
+    await userEvent.type(screen.getByPlaceholderText('Search city...'), 'Aus');
+    await userEvent.keyboard('{ArrowDown}');
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByPlaceholderText('Search city...')).toHaveValue('');
+  });
+
+  it('input is cleared after pressing Enter for a free-text search', async () => {
+    render(<AutocompleteInput onSelect={vi.fn()} placeholder="Search city..." />, { wrapper });
+    await userEvent.type(screen.getByPlaceholderText('Search city...'), 'Austin');
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByPlaceholderText('Search city...')).toHaveValue('');
   });
 
   it('shows a loading indicator in the dropdown while suggestions are being fetched', async () => {

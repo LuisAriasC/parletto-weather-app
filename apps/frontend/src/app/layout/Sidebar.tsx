@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
-import { SearchBar, RecentLocations, addSearch, clearSearch, removeSearch } from '../../features/search';
+import { SearchBar, RecentLocations, clearSearch, removeSearch } from '../../features/search';
 import { RecentSearch } from '../../features/search/store/searchSlice';
 import { AutocompleteSelection } from '../../features/search/components/AutocompleteInput';
+import { LocationEntry } from '../app';
 
 interface SidebarProps {
   isOpen: boolean;
-  onLocationSelect: (location: string) => void;
+  onLocationSelect: (entry: LocationEntry) => void;
 }
 
 export function Sidebar({ isOpen, onLocationSelect }: SidebarProps) {
@@ -14,8 +15,7 @@ export function Sidebar({ isOpen, onLocationSelect }: SidebarProps) {
   const recents = useSelector((s: RootState) => s.search.recents);
 
   function handleSelect({ label, query }: AutocompleteSelection | RecentSearch) {
-    dispatch(addSearch({ label, query }));
-    onLocationSelect(query);
+    onLocationSelect({ label, query });
   }
 
   function handleClear() {
@@ -28,7 +28,7 @@ export function Sidebar({ isOpen, onLocationSelect }: SidebarProps) {
 
   return (
     <aside
-      className={`w-56 flex-shrink-0 border-r border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 ${
+      className={`w-60 flex-shrink-0 border-r border-border bg-muted/40 p-4 ${
         isOpen ? 'block' : 'hidden'
       } md:block`}
     >

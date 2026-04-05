@@ -6,13 +6,13 @@
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| Node.js | 20 (Alpine) | Runtime |
+| Node.js | 24 (Alpine) | Runtime |
 | NestJS | 10.x | Application framework |
 | TypeScript | 5.x | Language |
 | RxJS | 7.x | Async data flow (`HttpService` returns Observables) |
 | Axios (via `@nestjs/axios`) | — | HTTP client for external APIs |
 | `cache-manager` | — | In-memory caching with TTL |
-| `@nestjs/throttler` | — | Rate limiting (30 req/min global, 20 req/min per endpoint) |
+| `@nestjs/throttler` | — | Rate limiting (100 req/min global, 100 req/min per endpoint) |
 | `@nestjs/swagger` | — | Auto-generated API docs at `/api/docs` (non-production only) |
 | `class-validator` / `class-transformer` | — | Request DTO validation |
 | Vitest | 3.x | Test runner |
@@ -23,13 +23,17 @@
 | Technology | Version | Purpose |
 |------------|---------|---------|
 | React | 19 | UI framework |
-| Vite | 6.x | Build tool and dev server |
+| Vite | 8.x | Build tool and dev server |
 | TypeScript | 5.x | Language |
 | Redux Toolkit | — | Client-side state (theme, units, recents) |
 | TanStack React Query | 5.x | Server state (weather data fetching, caching, refetching) |
 | Axios | — | HTTP client (wrapped in RxJS `from()`) |
 | RxJS | 7.x | Observable wrappers for API calls; consumed via `lastValueFrom()` |
-| Tailwind CSS | 4.x | Utility-first styling |
+| ShadCN UI | new-york | Accessible component primitives (Button, Input, Card, Badge, Skeleton) |
+| Lucide React | — | Icon library used throughout the UI |
+| `class-variance-authority` | — | Type-safe component variant management |
+| `clsx` + `tailwind-merge` | — | Class merging utility (`cn()`) |
+| Tailwind CSS | 4.x | Utility-first styling with CSS-native variable theming |
 | PostCSS | — | CSS processing (`@tailwindcss/postcss` plugin) |
 | Vitest | 3.x | Test runner |
 | Testing Library | — | Component testing (`@testing-library/react`, `@testing-library/user-event`) |
@@ -88,7 +92,7 @@
 
 **Component design:** Components receive typed props. Layout components (`Header`, `Sidebar`, `MainPanel`) compose feature components. No business logic in layout — it delegates to feature hooks and components.
 
-**Styling:** Tailwind CSS v4 with utility classes directly in JSX. Dark mode uses the `dark:` variant prefix, toggled by adding/removing the `dark` class on `<html>`. No `tailwind.config.js` — all configuration is in CSS using `@import "tailwindcss"` and `@variant`.
+**Styling:** ShadCN UI (new-york style) provides the component primitives. Tailwind CSS v4 handles all utility styling. The design system is driven by CSS custom properties defined in `index.css` using `@theme inline` — semantic tokens (`--background`, `--foreground`, `--primary`, `--muted-foreground`, etc.) are mapped to Tailwind color utilities so both ShadCN components and custom utility classes share the same palette. Dark mode toggles by adding/removing the `dark` class on `<html>`; the `@variant dark` declaration applies the `.dark` overrides. No `tailwind.config.js` — all configuration is in CSS. Lucide React provides icons. The `cn()` utility (`clsx` + `tailwind-merge`) handles conditional and overridable class composition in ShadCN components.
 
 **Error boundaries:** `ErrorBoundary` wraps the app for uncaught React errors. `ErrorMessage` renders API errors with user-friendly messages mapped from status codes.
 
@@ -106,7 +110,7 @@
 
 ### Docker & Deployment Conventions
 
-**Multi-stage builds:** Both Dockerfiles use a Node 20 Alpine builder stage and a minimal runtime stage (Node for backend, nginx for frontend).
+**Multi-stage builds:** Both Dockerfiles use a Node 24 Alpine builder stage and a minimal runtime stage (Node for backend, nginx for frontend).
 
 **Compose networking:** Only the frontend container exposes a host port (80). The backend is internal-only — accessible via Docker's service DNS (`http://backend:3000`).
 
