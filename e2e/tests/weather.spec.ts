@@ -65,15 +65,15 @@ test.describe('Weather App', () => {
     await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
     await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
-    await expect(page.getByRole('button', { name: 'Next 24h' })).toBeVisible();
-    await expect(page.getByRole('button', { name: '5-Day' })).toBeVisible();
+    await expect(page.getByRole('tab', { name: 'Next 24h' })).toBeVisible();
+    await expect(page.getByRole('tab', { name: '5-Day' })).toBeVisible();
   });
 
   test('Next 24h tab is active by default after search', async ({ page }) => {
     await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
     await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
-    const threeHourBtn = page.getByRole('button', { name: 'Next 24h' });
+    const threeHourBtn = page.getByRole('tab', { name: 'Next 24h' });
     await expect(threeHourBtn).toHaveAttribute('aria-pressed', 'true');
   });
 
@@ -81,7 +81,7 @@ test.describe('Weather App', () => {
     await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
     await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
-    await page.getByRole('button', { name: '5-Day' }).click();
+    await page.getByRole('tab', { name: '5-Day' }).click();
     await expect(page.getByText('5-Day Forecast')).toBeVisible({ timeout: 5_000 });
   });
 
@@ -89,10 +89,10 @@ test.describe('Weather App', () => {
     await page.fill('input[placeholder*="Search"]', 'Austin');
     await page.press('input[placeholder*="Search"]', 'Enter');
     await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
-    await page.getByRole('button', { name: '5-Day' }).click();
+    await page.getByRole('tab', { name: '5-Day' }).click();
     await expect(page.getByText('5-Day Forecast')).toBeVisible({ timeout: 5_000 });
-    await page.getByRole('button', { name: 'Next 24h' }).click();
-    const threeHourBtn = page.getByRole('button', { name: 'Next 24h' });
+    await page.getByRole('tab', { name: 'Next 24h' }).click();
+    const threeHourBtn = page.getByRole('tab', { name: 'Next 24h' });
     await expect(threeHourBtn).toHaveAttribute('aria-pressed', 'true');
   });
 
@@ -115,7 +115,7 @@ test.describe('Weather App', () => {
     const labelText = await firstOption.textContent();
     await firstOption.click();
     await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
-    await expect(page.getByRole('button', { name: labelText! })).toBeVisible();
+    await expect(page.getByRole('button', { name: labelText!, exact: true })).toBeVisible();
     expect(labelText).not.toMatch(/^-?\d+\.?\d*,-?\d+\.?\d*$/);
   });
 
