@@ -5,7 +5,7 @@
   "scripts": {
     "start:backend": "nx serve backend",
     "start:frontend": "nx serve frontend",
-    "test": "nx run-many --target=test --all",
+    "test": "vitest run --config apps/backend/vitest.config.ts && vitest run --config apps/frontend/vite.config.mts",
     "build": "nx run-many --target=build --all"
   },
   "devDependencies": {
