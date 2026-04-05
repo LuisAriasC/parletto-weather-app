@@ -46,4 +46,32 @@ describe('GetGeocodeQuery', () => {
     expect(errors.length).toBeGreaterThan(0);
     expect(errors[0].property).toBe('q');
   });
+
+  it('passes validation for international city names with Unicode letters', async () => {
+    const errors = await validate(build('São Paulo'));
+    expect(errors).toHaveLength(0);
+  });
+
+  it('passes validation for city names with apostrophes', async () => {
+    const errors = await validate(build("L'Aquila"));
+    expect(errors).toHaveLength(0);
+  });
+
+  it('fails validation when q contains script injection characters', async () => {
+    const errors = await validate(build('<script>alert(1)</script>'));
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('q');
+  });
+
+  it('fails validation when q contains SQL injection characters', async () => {
+    const errors = await validate(build("'; DROP TABLE cities; --"));
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('q');
+  });
+
+  it('fails validation when q contains URL-encoded or special symbols', async () => {
+    const errors = await validate(build('Austin%20TX'));
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('q');
+  });
 });

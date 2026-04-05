@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Header } from './layout/Header';
 import { Sidebar } from './layout/Sidebar';
 import { MainPanel } from './layout/MainPanel';
 import { ErrorBoundary, Toast } from '../shared/components';
+import { RootState } from './store';
 
 export function App() {
-  const [location, setLocation] = useState('');
+  const recents = useSelector((s: RootState) => s.search.recents);
+  const [location, setLocation] = useState(recents[0]?.query ?? '');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
