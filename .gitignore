@@ -1,0 +1,36 @@
+# Environment — never commit secrets
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.next/
+
+# Test coverage
+coverage/
+test-results/
+
+# Nx cache
+.nx/cache
+.nx/workspace-data
+
+# Vite / Vitest timestamps
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Claude
+.claude/
+.superpowers/
