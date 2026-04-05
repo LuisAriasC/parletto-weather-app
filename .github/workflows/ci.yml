@@ -9,6 +9,8 @@ on:
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
+    env:
+      NX_SKIP_NX_CACHE: true
     steps:
       - uses: actions/checkout@v4
 
