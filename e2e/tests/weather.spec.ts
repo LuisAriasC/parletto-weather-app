@@ -174,7 +174,7 @@ test.describe('Weather App', () => {
     await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
 
     await page.getByRole('button', { name: 'Austin', exact: true }).click();
-    await expect(page.getByText(/Austin/i)).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText('Austin, US')).toBeVisible({ timeout: 10_000 });
   });
 
   test('recent searches persist after page reload', async ({ page }) => {
