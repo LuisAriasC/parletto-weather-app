@@ -38,7 +38,7 @@ describe('Rate limit headers (integration)', () => {
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      imports: [ThrottlerModule.forRoot([{ ttl: 60_000, limit: 20 }])],
+      imports: [ThrottlerModule.forRoot([{ ttl: 60_000, limit: 100 }])],
       controllers: [WeatherController],
       providers: [
         {
@@ -63,13 +63,13 @@ describe('Rate limit headers (integration)', () => {
     const res = await request(app.getHttpServer())
       .get('/weather?location=Austin&units=imperial');
 
-    expect(res.headers['x-ratelimit-limit']).toBe('20');
+    expect(res.headers['x-ratelimit-limit']).toBe('100');
   });
 
   it('includes X-RateLimit-Remaining header on weather response', async () => {
     const res = await request(app.getHttpServer())
       .get('/weather?location=Austin&units=imperial');
 
-    expect(res.headers['x-ratelimit-remaining']).toBe('19');
+    expect(res.headers['x-ratelimit-remaining']).toBe('99');
   });
 });
