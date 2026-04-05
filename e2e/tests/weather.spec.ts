@@ -46,11 +46,11 @@ test.describe('Weather App', () => {
     await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
 
     // Assert extended stat tile labels are present
-    await expect(page.getByText('Visibility')).toBeVisible();
-    await expect(page.getByText('Pressure')).toBeVisible();
-    await expect(page.getByText('Clouds')).toBeVisible();
-    await expect(page.getByText('Sunrise')).toBeVisible();
-    await expect(page.getByText('Sunset')).toBeVisible();
+    await expect(page.getByText('Visibility', { exact: true })).toBeVisible();
+    await expect(page.getByText('Pressure', { exact: true })).toBeVisible();
+    await expect(page.getByText('Clouds', { exact: true })).toBeVisible();
+    await expect(page.getByText('Sunrise', { exact: true })).toBeVisible();
+    await expect(page.getByText('Sunset', { exact: true })).toBeVisible();
   });
 
   test('recent search appears in sidebar after search', async ({ page }) => {
