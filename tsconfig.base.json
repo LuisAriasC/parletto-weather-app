@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@parletto/shared": ["libs/shared/src/index.ts"],
-      "shared": ["libs/shared/src/index.ts"]
+      "shared": ["libs/shared/src/index.ts"],
+      "@/*": ["apps/frontend/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

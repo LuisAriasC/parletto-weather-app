@@ -1,4 +1,6 @@
+import { AlertCircle, RefreshCw } from 'lucide-react';
 import { ErrorDto } from '@parletto/shared';
+import { Button } from '@/components/ui/button';
 
 const MESSAGE_MAP: Record<number, string> = {
   400: 'Invalid location. Please check the city name and try again.',
@@ -17,18 +19,24 @@ export function ErrorMessage({ error, onRetry }: ErrorMessageProps) {
   return (
     <div
       role="alert"
-      className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300"
+      className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive"
     >
-      <p>{message}</p>
-      {onRetry && (
-        <button
-          type="button"
-          onClick={onRetry}
-          className="mt-2 rounded-md border border-red-300 px-3 py-1 text-xs font-medium hover:bg-red-100 dark:border-red-700 dark:hover:bg-red-900"
-        >
-          Retry
-        </button>
-      )}
+      <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" aria-hidden="true" />
+      <div className="flex-1">
+        <p>{message}</p>
+        {onRetry && (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onRetry}
+            className="mt-3 border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive"
+          >
+            <RefreshCw className="h-3 w-3" aria-hidden="true" />
+            Retry
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

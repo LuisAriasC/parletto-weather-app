@@ -9,7 +9,7 @@ interface ForecastStripProps {
 export function ForecastStrip({ data, units }: ForecastStripProps) {
   return (
     <div>
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         5-Day Forecast
       </p>
       <div className="grid grid-cols-5 gap-2">

@@ -4,15 +4,15 @@ A full-stack weather application built as an Nx monorepo. Features a NestJS Back
 
 ## Stack
 
-| Layer      | Technology                                                          |
-|------------|---------------------------------------------------------------------|
-| Monorepo   | Nx                                                                  |
-| Backend    | NestJS, RxJS, `@nestjs/axios`, `cache-manager`, `@nestjs/throttler` |
-| Frontend   | React 19, Vite, Redux Toolkit, TanStack React Query v5              |
-| Styling    | Tailwind CSS v4                                                     |
-| Shared     | TypeScript interfaces (`libs/shared`)                               |
-| Testing    | Vitest 3, Testing Library, Playwright                               |
-| Production | Docker Compose (nginx + Node)                                       |
+| Layer      | Technology                                                                           |
+|------------|--------------------------------------------------------------------------------------|
+| Monorepo   | Nx                                                                                   |
+| Backend    | NestJS, RxJS, `@nestjs/axios`, `cache-manager`, `@nestjs/throttler`                  |
+| Frontend   | React 19, Vite, Redux Toolkit, TanStack React Query v5                               |
+| UI         | ShadCN UI (new-york style), Tailwind CSS v4, Lucide React, `class-variance-authority` |
+| Shared     | TypeScript interfaces (`libs/shared`)                                                |
+| Testing    | Vitest 3, Testing Library, Playwright                                                |
+| Production | Docker Compose (nginx + Node)                                                        |
 
 ## Features
 
@@ -125,7 +125,7 @@ cd e2e && npx playwright install chromium
 npx playwright test
 ```
 
-28 E2E scenarios covered:
+33 E2E scenarios covered:
 - Search valid city shows weather card
 - Search invalid city shows error alert
 - Empty search shows validation message
@@ -154,13 +154,18 @@ npx playwright test
 - 5-Day forecast cards show temperature values
 - ArrowRight keyboard navigation switches from Next 24h to 5-Day tab
 - Last searched location is restored automatically after page reload
+- Clear button appears in search input after typing
+- Clear button removes text from search input
+- Search input clears after selecting an autocomplete suggestion
+- Search input clears after pressing Enter to search
+- Invalid city is not added to recent searches
 
 ## CI
 
 GitHub Actions runs on every push to `main` and on all pull requests:
 
 1. **Unit tests** — `npm test` against Node 24
-2. **E2E tests** — builds the Docker staging stack, runs all 28 Playwright scenarios, tears down
+2. **E2E tests** — builds the Docker staging stack, runs all 33 Playwright scenarios, tears down
 
 To enable E2E tests in CI, add these repository secrets in **GitHub → Settings → Secrets and variables → Actions**:
 - `OPENWEATHER_API_KEY`
@@ -180,12 +185,15 @@ parletto/
 │   │       ├── weather/            # Weather controller, service, mapper, metrics
 │   │       └── geocode/            # Geocode controller + service (GeoApify)
 │   └── frontend/                   # React SPA
+│       ├── components.json         # ShadCN configuration
 │       └── src/
+│           ├── components/ui/      # ShadCN primitives: Button, Input, Card, Badge, Skeleton
+│           ├── lib/                # cn() utility (clsx + tailwind-merge)
 │           ├── app/layout/         # Header (hamburger), Sidebar (responsive), MainPanel
 │           ├── app/store/          # Redux store setup (theme, settings, search, toast)
 │           ├── features/search/    # SearchBar, AutocompleteInput, RecentLocations, searchSlice
 │           ├── features/weather/   # CurrentWeather, ForecastPanel (keyboard tabs), HourlyStrip, ForecastStrip, StatTile
-│           └── shared/             # ErrorBoundary, ErrorMessage, LoadingSpinner, WeatherSkeleton, ForecastSkeleton, Toast, themeSlice, settingsSlice, toastSlice
+│           └── shared/             # ErrorBoundary, ErrorMessage, WeatherSkeleton, ForecastSkeleton, Toast, themeSlice, settingsSlice, toastSlice
 ├── libs/
 │   └── shared/                     # Shared TypeScript interfaces (WeatherDto, ForecastDto, HourlyDto, etc.)
 ├── docs/                           # Project documentation
@@ -195,7 +203,7 @@ parletto/
 │   ├── external-apis.md            # OpenWeather + GeoApify integration docs
 │   ├── environment-variables.md    # Env vars by stage (dev, staging, production)
 │   └── requirements/               # Tracked requirements with checkbox status
-├── e2e/                            # Playwright E2E tests (28 scenarios)
+├── e2e/                            # Playwright E2E tests (33 scenarios)
 ├── docker-compose.yml
 └── .env.example
 ```

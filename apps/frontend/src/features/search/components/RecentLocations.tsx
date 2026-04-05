@@ -1,4 +1,6 @@
+import { X } from 'lucide-react';
 import { RecentSearch } from '../store/searchSlice';
+import { Button } from '@/components/ui/button';
 
 interface RecentLocationsProps {
   recents: RecentSearch[];
@@ -13,19 +15,19 @@ export function RecentLocations({ recents, onSelect, onClear, onRemove }: Recent
   return (
     <div className="mt-4">
       <div className="mb-2 flex items-center justify-between">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Recent
         </p>
         <button
           type="button"
           onClick={onClear}
           aria-label="Clear search history"
-          className="text-xs text-gray-400 hover:text-red-400 dark:text-gray-500 dark:hover:text-red-400"
+          className="text-xs text-muted-foreground hover:text-destructive transition-colors"
         >
           Clear
         </button>
       </div>
-      <ul className="space-y-1">
+      <ul className="space-y-0.5">
         {recents.map((item) => (
           <li key={item.query} className="flex items-center gap-1">
             {item.icon && (
@@ -39,18 +41,20 @@ export function RecentLocations({ recents, onSelect, onClear, onRemove }: Recent
             <button
               type="button"
               onClick={() => onSelect(item)}
-              className="flex-1 truncate rounded px-2 py-1.5 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+              className="flex-1 truncate rounded-md px-2 py-1.5 text-left text-sm text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
             >
               {item.label}
             </button>
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon"
               onClick={() => onRemove(item.query)}
               aria-label={`Remove ${item.label} from recent searches`}
-              className="flex-shrink-0 rounded p-0.5 text-gray-300 hover:text-red-400 dark:text-gray-600 dark:hover:text-red-400"
+              className="h-7 w-7 flex-shrink-0 text-muted-foreground hover:text-destructive"
             >
-              ✕
-            </button>
+              <X className="h-3 w-3" aria-hidden="true" />
+            </Button>
           </li>
         ))}
       </ul>

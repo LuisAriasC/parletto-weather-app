@@ -8,6 +8,9 @@ import { ForecastStrip } from './ForecastStrip';
 import { ForecastSkeleton } from '../../../shared/components/ForecastSkeleton';
 import { addToast } from '../../../shared/store/toastSlice';
 import { AppDispatch } from '../../../app/store';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 type Tab = '3h' | '5d';
 
@@ -48,54 +51,51 @@ export function ForecastPanel({ location, units }: ForecastPanelProps) {
     }
   }
 
-  const tabClass = (tab: Tab) =>
-    `px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-      activeTab === tab
-        ? 'bg-blue-500 text-white'
-        : 'border border-gray-300 text-gray-600 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800'
-    }`;
-
   return (
-    <div className="rounded-xl bg-white p-4 shadow-sm dark:bg-gray-800">
-      <div className="mb-4 flex gap-2" role="tablist">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            role="tab"
-            className={tabClass(tab)}
-            onClick={() => setActiveTab(tab)}
-            onKeyDown={(e) => handleTabKeyDown(e, tab)}
-            aria-pressed={activeTab === tab}
-            aria-selected={activeTab === tab}
-          >
-            {tabLabels[tab]}
-          </button>
-        ))}
-      </div>
+    <Card>
+      <CardContent className="pt-5">
+        <div className="mb-4 flex gap-2" role="tablist">
+          {tabs.map((tab) => (
+            <Button
+              key={tab}
+              role="tab"
+              variant={activeTab === tab ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setActiveTab(tab)}
+              onKeyDown={(e) => handleTabKeyDown(e, tab)}
+              aria-pressed={activeTab === tab}
+              aria-selected={activeTab === tab}
+              className={cn('rounded-full', activeTab !== tab && 'text-muted-foreground')}
+            >
+              {tabLabels[tab]}
+            </Button>
+          ))}
+        </div>
 
-      {activeTab === '3h' && (
-        <>
-          {hourly.isLoading && <ForecastSkeleton />}
-          {hourly.isError && (
-            <p className="text-sm text-gray-400 dark:text-gray-500">
-              Hourly forecast unavailable.
-            </p>
-          )}
-          {hourly.data && <HourlyStrip data={hourly.data} units={units} />}
-        </>
-      )}
+        {activeTab === '3h' && (
+          <>
+            {hourly.isLoading && <ForecastSkeleton />}
+            {hourly.isError && (
+              <p className="text-sm text-muted-foreground">
+                Hourly forecast unavailable.
+              </p>
+            )}
+            {hourly.data && <HourlyStrip data={hourly.data} units={units} />}
+          </>
+        )}
 
-      {activeTab === '5d' && (
-        <>
-          {forecast.isLoading && <ForecastSkeleton />}
-          {forecast.isError && (
-            <p className="text-sm text-gray-400 dark:text-gray-500">
-              5-day forecast unavailable.
-            </p>
-          )}
-          {forecast.data && <ForecastStrip data={forecast.data} units={units} />}
-        </>
-      )}
-    </div>
+        {activeTab === '5d' && (
+          <>
+            {forecast.isLoading && <ForecastSkeleton />}
+            {forecast.isError && (
+              <p className="text-sm text-muted-foreground">
+                5-day forecast unavailable.
+              </p>
+            )}
+            {forecast.data && <ForecastStrip data={forecast.data} units={units} />}
+          </>
+        )}
+      </CardContent>
+    </Card>
   );
 }
