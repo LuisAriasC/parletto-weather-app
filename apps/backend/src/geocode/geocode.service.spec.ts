@@ -76,4 +76,10 @@ describe('GeocodeService', () => {
     const result = await lastValueFrom(service.getSuggestions$('Austin'));
     expect(result).toEqual([]);
   });
+
+  it('returns empty array when response is missing the features key (malformed JSON)', async () => {
+    httpService.get.mockReturnValue(of({ data: {} }));
+    const result = await lastValueFrom(service.getSuggestions$('Austin'));
+    expect(result).toEqual([]);
+  });
 });

@@ -111,6 +111,32 @@ describe('WeatherService', () => {
       ).rejects.toBeInstanceOf(AxiosError);
     });
 
+    it('propagates 401 Unauthorized from OpenWeather (invalid API key)', async () => {
+      const error = new AxiosError('Unauthorized');
+      error.response = { status: 401, statusText: 'Unauthorized', data: {}, headers: {}, config: {} as any };
+      httpService.get.mockReturnValue(throwError(() => error));
+      const rejected = await firstValueFrom(service.getWeather$('Austin', 'imperial')).catch((e) => e);
+      expect(rejected).toBeInstanceOf(AxiosError);
+      expect(rejected.response?.status).toBe(401);
+    });
+
+    it('propagates 429 Too Many Requests from OpenWeather (rate limited)', async () => {
+      const error = new AxiosError('Too Many Requests');
+      error.response = { status: 429, statusText: 'Too Many Requests', data: {}, headers: {}, config: {} as any };
+      httpService.get.mockReturnValue(throwError(() => error));
+      const rejected = await firstValueFrom(service.getWeather$('Austin', 'imperial')).catch((e) => e);
+      expect(rejected).toBeInstanceOf(AxiosError);
+      expect(rejected.response?.status).toBe(429);
+    });
+
+    it('propagates timeout error (ECONNABORTED)', async () => {
+      const error = new AxiosError('timeout of 5000ms exceeded', 'ECONNABORTED');
+      httpService.get.mockReturnValue(throwError(() => error));
+      const rejected = await firstValueFrom(service.getWeather$('Austin', 'imperial')).catch((e) => e);
+      expect(rejected).toBeInstanceOf(AxiosError);
+      expect(rejected.code).toBe('ECONNABORTED');
+    });
+
     it('uses lat/lon params when location looks like coordinates', async () => {
       httpService.get.mockReturnValue(of({ data: {} }));
       await firstValueFrom(service.getWeather$('30.27,-97.74', 'imperial'));
@@ -143,6 +169,21 @@ describe('WeatherService', () => {
       expect(result).toEqual(mockForecastDtos);
       expect(httpService.get).not.toHaveBeenCalled();
       expect(metrics.recordCacheHit).toHaveBeenCalledOnce();
+    });
+
+    it('propagates AxiosError when forecast fetch fails', async () => {
+      httpService.get.mockReturnValue(throwError(() => new AxiosError('fail')));
+      await expect(
+        firstValueFrom(service.getForecast$('BadCity', 'imperial')),
+      ).rejects.toBeInstanceOf(AxiosError);
+    });
+
+    it('propagates 401 when forecast fetch returns Unauthorized', async () => {
+      const error = new AxiosError('Unauthorized');
+      error.response = { status: 401, statusText: 'Unauthorized', data: {}, headers: {}, config: {} as any };
+      httpService.get.mockReturnValue(throwError(() => error));
+      const rejected = await firstValueFrom(service.getForecast$('Austin', 'imperial')).catch((e) => e);
+      expect(rejected.response?.status).toBe(401);
     });
   });
 

@@ -126,4 +126,106 @@ test.describe('Weather App', () => {
     await expect(page.getByRole('listbox')).not.toBeVisible();
     await expect(page.getByText(/Search for a city to get started/i)).toBeVisible();
   });
+
+  test('ArrowDown highlights first autocomplete option', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Aus');
+    await expect(page.getByRole('option').first()).toBeVisible({ timeout: 5_000 });
+    await page.press('input[placeholder*="Search"]', 'ArrowDown');
+    await expect(page.getByRole('option').first()).toHaveAttribute('aria-selected', 'true');
+  });
+
+  test('ArrowDown then Enter loads weather for highlighted option', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Aus');
+    await expect(page.getByRole('option').first()).toBeVisible({ timeout: 5_000 });
+    await page.press('input[placeholder*="Search"]', 'ArrowDown');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
+  });
+
+  test('autocomplete shows no results found for unmatched query', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'zzxqqyzabc123');
+    await expect(page.getByRole('listbox')).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByText('No results found')).toBeVisible({ timeout: 5_000 });
+  });
+
+  test('remove individual recent search', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByRole('button', { name: 'Austin, TX' })).toBeVisible({ timeout: 10_000 });
+    await page.click('button[aria-label="Remove Austin, TX from recent searches"]');
+    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).not.toBeVisible();
+  });
+
+  test('clear all recent searches', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByRole('button', { name: 'Austin, TX' })).toBeVisible({ timeout: 10_000 });
+    await page.click('button[aria-label="Clear search history"]');
+    await expect(page.getByRole('button', { name: 'Austin, TX', exact: true })).not.toBeVisible();
+  });
+
+  test('clicking a recent search loads weather for that location', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
+
+    await page.fill('input[placeholder*="Search"]', 'Chicago, IL');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
+
+    await page.getByRole('button', { name: 'Austin, TX' }).first().click();
+    await expect(page.getByText(/Austin/i)).toBeVisible({ timeout: 10_000 });
+  });
+
+  test('recent searches persist after page reload', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByRole('button', { name: 'Austin, TX' })).toBeVisible({ timeout: 10_000 });
+    await page.reload();
+    await expect(page.getByRole('button', { name: 'Austin, TX' })).toBeVisible({ timeout: 5_000 });
+  });
+
+  test('unit preference persists after page reload', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByText(/°F/)).toBeVisible({ timeout: 10_000 });
+    await page.click('button[aria-label*="Toggle temperature"]');
+    await expect(page.getByText(/°C/)).toBeVisible();
+    await page.reload();
+    await page.fill('input[placeholder*="Search"]', 'Austin, TX');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByText(/°C/)).toBeVisible({ timeout: 10_000 });
+  });
+
+  test('dark mode persists after page reload', async ({ page }) => {
+    await page.click('button[aria-label*="dark mode"]');
+    await expect(page.locator('html')).toHaveClass(/dark/);
+    await page.reload();
+    await expect(page.locator('html')).toHaveClass(/dark/);
+  });
+
+  test('hourly forecast strip shows time column header after search', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByRole('columnheader', { name: 'Time' })).toBeVisible();
+  });
+
+  test('5-Day forecast cards show temperature values', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
+    await page.getByRole('tab', { name: '5-Day' }).click();
+    await expect(page.getByText('5-Day Forecast')).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByText(/\d+°[FC]/).first()).toBeVisible();
+  });
+
+  test('ArrowRight keyboard navigation switches from Next 24h to 5-Day tab', async ({ page }) => {
+    await page.fill('input[placeholder*="Search"]', 'Austin');
+    await page.press('input[placeholder*="Search"]', 'Enter');
+    await expect(page.getByText(/Feels like/i)).toBeVisible({ timeout: 10_000 });
+    await page.getByRole('tab', { name: 'Next 24h' }).focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.getByRole('tab', { name: '5-Day' })).toHaveAttribute('aria-pressed', 'true');
+  });
 });

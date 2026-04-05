@@ -28,6 +28,10 @@ describe('formatVisibility', () => {
     expect(formatVisibility(1609, 'imperial')).toBe('1.0 mi'));
   it('formats 16093m as "10.0 mi" in imperial', () =>
     expect(formatVisibility(16093, 'imperial')).toBe('10.0 mi'));
+  it('formats 0m as "0.0 km" in metric', () =>
+    expect(formatVisibility(0, 'metric')).toBe('0.0 km'));
+  it('formats 0m as "0.0 mi" in imperial', () =>
+    expect(formatVisibility(0, 'imperial')).toBe('0.0 mi'));
 });
 
 describe('formatPressure', () => {
@@ -42,6 +46,10 @@ describe('formatPrecipitation', () => {
     expect(formatPrecipitation(3.16, 'metric')).toBe('3.2 mm'));
   it('formats 25.4 mm as "1.00 in" in imperial', () =>
     expect(formatPrecipitation(25.4, 'imperial')).toBe('1.00 in'));
+  it('formats 0 mm as "0.0 mm" in metric', () =>
+    expect(formatPrecipitation(0, 'metric')).toBe('0.0 mm'));
+  it('formats 0 mm as "0.00 in" in imperial', () =>
+    expect(formatPrecipitation(0, 'imperial')).toBe('0.00 in'));
 });
 
 describe('formatTime', () => {

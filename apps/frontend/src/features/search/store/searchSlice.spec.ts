@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import searchReducer, { addSearch, clearSearch } from './searchSlice';
+import searchReducer, { addSearch, clearSearch, removeSearch, updateSearchIcon } from './searchSlice';
 
 describe('searchSlice', () => {
   it('has empty array as initial state', () => {
@@ -52,5 +52,85 @@ describe('searchSlice', () => {
       clearSearch(),
     );
     expect(state.recents).toEqual([]);
+  });
+
+  describe('removeSearch', () => {
+    it('removes the entry with the matching query', () => {
+      const initial = {
+        recents: [
+          { label: 'Austin, Texas, United States', query: '30.2672,-97.7431' },
+          { label: 'New York City, New York, United States', query: '40.7128,-74.0060' },
+        ],
+      };
+      const state = searchReducer(initial, removeSearch('30.2672,-97.7431'));
+      expect(state.recents).toEqual([
+        { label: 'New York City, New York, United States', query: '40.7128,-74.0060' },
+      ]);
+    });
+
+    it('is a no-op when query is not found', () => {
+      const initial = {
+        recents: [{ label: 'Austin, Texas, United States', query: '30.2672,-97.7431' }],
+      };
+      const state = searchReducer(initial, removeSearch('99.9999,-99.9999'));
+      expect(state.recents).toHaveLength(1);
+    });
+
+    it('results in empty array when removing the only entry', () => {
+      const initial = {
+        recents: [{ label: 'Austin', query: '30.2672,-97.7431' }],
+      };
+      const state = searchReducer(initial, removeSearch('30.2672,-97.7431'));
+      expect(state.recents).toEqual([]);
+    });
+  });
+
+  describe('updateSearchIcon', () => {
+    it('sets icon on the matching entry', () => {
+      const initial = {
+        recents: [{ label: 'Austin', query: '30.2672,-97.7431' }],
+      };
+      const state = searchReducer(
+        initial,
+        updateSearchIcon({ query: '30.2672,-97.7431', icon: '02d' }),
+      );
+      expect(state.recents[0].icon).toBe('02d');
+    });
+
+    it('updates icon if entry already has one', () => {
+      const initial = {
+        recents: [{ label: 'Austin', query: '30.2672,-97.7431', icon: '01d' }],
+      };
+      const state = searchReducer(
+        initial,
+        updateSearchIcon({ query: '30.2672,-97.7431', icon: '10d' }),
+      );
+      expect(state.recents[0].icon).toBe('10d');
+    });
+
+    it('is a no-op when query is not found', () => {
+      const initial = {
+        recents: [{ label: 'Austin', query: '30.2672,-97.7431' }],
+      };
+      const state = searchReducer(
+        initial,
+        updateSearchIcon({ query: 'nonexistent', icon: '02d' }),
+      );
+      expect(state.recents[0].icon).toBeUndefined();
+    });
+
+    it('does not mutate other entries', () => {
+      const initial = {
+        recents: [
+          { label: 'Austin', query: '30.2672,-97.7431' },
+          { label: 'New York', query: '40.7128,-74.0060' },
+        ],
+      };
+      const state = searchReducer(
+        initial,
+        updateSearchIcon({ query: '30.2672,-97.7431', icon: '02d' }),
+      );
+      expect(state.recents[1].icon).toBeUndefined();
+    });
   });
 });
