@@ -2,7 +2,7 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
 import { Observable } from 'rxjs';
-import { WeatherDto, ForecastDto, HourlyDto } from '@parletto/shared';
+import { WeatherDto, ForecastDto, HourlyDto } from '@palmetto/shared';
 import { WeatherService } from './weather.service';
 import { GetWeatherQuery } from './dto/get-weather.query';
 

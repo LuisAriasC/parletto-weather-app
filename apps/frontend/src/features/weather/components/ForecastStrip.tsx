@@ -1,4 +1,4 @@
-import { ForecastDto, Units } from '@parletto/shared';
+import { ForecastDto, Units } from '@palmetto/shared';
 import { ForecastDay } from './ForecastDay';
 
 interface ForecastStripProps {

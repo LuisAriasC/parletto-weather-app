@@ -22,7 +22,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@parletto/shared': resolve(__dirname, '../../libs/shared/src/index.ts'),
+      '@palmetto/shared': resolve(__dirname, '../../libs/shared/src/index.ts'),
     },
   },
   test: {

@@ -1,6 +1,6 @@
 import { lastValueFrom } from 'rxjs';
 import { useQuery } from '@tanstack/react-query';
-import { GeocodeSuggestionDto, ErrorDto } from '@parletto/shared';
+import { GeocodeSuggestionDto, ErrorDto } from '@palmetto/shared';
 import { geocodeService } from '../services/geocode.service';
 
 export function useGeocodeSuggestions(query: string) {

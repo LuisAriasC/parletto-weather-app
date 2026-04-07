@@ -1,4 +1,4 @@
-import { ForecastDto, Units } from '@parletto/shared';
+import { ForecastDto, Units } from '@palmetto/shared';
 import { Card, CardContent } from '@/components/ui/card';
 
 interface ForecastDayProps {

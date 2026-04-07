@@ -1,6 +1,6 @@
-# Parletto — Requirements Index
+# Palmetto — Requirements Index
 
-This folder contains all functional and non-functional requirements for Parletto, organized by feature area.
+This folder contains all functional and non-functional requirements for Palmetto, organized by feature area.
 
 ## How This Document Works
 

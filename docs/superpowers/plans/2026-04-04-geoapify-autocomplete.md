@@ -305,7 +305,7 @@ import { HttpService } from '@nestjs/axios';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { GeocodeSuggestionDto } from '@parletto/shared';
+import { GeocodeSuggestionDto } from '@palmetto/shared';
 import { AppConfigService } from '../config/app-config.service';
 
 interface GeoApifyFeature {
@@ -398,7 +398,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { of, lastValueFrom } from 'rxjs';
 import { GeocodeController } from './geocode.controller';
 import { GeocodeService } from './geocode.service';
-import { GeocodeSuggestionDto } from '@parletto/shared';
+import { GeocodeSuggestionDto } from '@palmetto/shared';
 
 const mockSuggestions: GeocodeSuggestionDto[] = [
   { placeId: 'abc123', label: 'Austin, Texas, United States', lat: 30.2672, lon: -97.7431 },
@@ -439,7 +439,7 @@ Create `apps/backend/src/geocode/geocode.controller.ts`:
 import { Controller, Get, Query } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { Observable } from 'rxjs';
-import { GeocodeSuggestionDto } from '@parletto/shared';
+import { GeocodeSuggestionDto } from '@palmetto/shared';
 import { GeocodeService } from './geocode.service';
 import { GetGeocodeQuery } from './dto/get-geocode.query';
 
@@ -539,7 +539,7 @@ Create `apps/frontend/src/features/search/services/geocode.service.ts`:
 import axios from 'axios';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GeocodeSuggestionDto } from '@parletto/shared';
+import { GeocodeSuggestionDto } from '@palmetto/shared';
 
 const API_BASE = import.meta.env['VITE_API_BASE_URL'] ?? '/api';
 
@@ -560,7 +560,7 @@ Create `apps/frontend/src/features/search/hooks/useGeocodeSuggestions.ts`:
 ```typescript
 import { lastValueFrom } from 'rxjs';
 import { useQuery } from '@tanstack/react-query';
-import { GeocodeSuggestionDto, ErrorDto } from '@parletto/shared';
+import { GeocodeSuggestionDto, ErrorDto } from '@palmetto/shared';
 import { geocodeService } from '../services/geocode.service';
 
 export function useGeocodeSuggestions(query: string) {
@@ -945,7 +945,7 @@ Expected: FAIL — `AutocompleteInput` not found
 Create `apps/frontend/src/features/search/components/AutocompleteInput.tsx`:
 ```typescript
 import { useState, useEffect } from 'react';
-import { GeocodeSuggestionDto } from '@parletto/shared';
+import { GeocodeSuggestionDto } from '@palmetto/shared';
 import { useGeocodeSuggestions } from '../hooks/useGeocodeSuggestions';
 
 export interface AutocompleteSelection {

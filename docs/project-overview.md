@@ -1,8 +1,8 @@
-# Parletto — Project Overview
+# Palmetto — Project Overview
 
-## What is Parletto?
+## What is Palmetto?
 
-Parletto is a full-stack weather application that lets users search for cities worldwide and view current weather conditions, hourly forecasts, and 5-day daily forecasts. It follows a Backend-for-Frontend (BFF) architecture where the React frontend never communicates directly with third-party APIs — all external calls are proxied through a NestJS backend.
+Palmetto is a full-stack weather application that lets users search for cities worldwide and view current weather conditions, hourly forecasts, and 5-day daily forecasts. It follows a Backend-for-Frontend (BFF) architecture where the React frontend never communicates directly with third-party APIs — all external calls are proxied through a NestJS backend.
 
 ## Key Features
 
@@ -53,7 +53,7 @@ A `/api/health` endpoint exposes uptime, API key status, and cache performance m
 
 ## Monorepo Structure
 
-Parletto is an [Nx](https://nx.dev) monorepo with three packages:
+Palmetto is an [Nx](https://nx.dev) monorepo with three packages:
 
 | Package | Path | Purpose |
 |---------|------|---------|

@@ -1,6 +1,6 @@
-# Parletto — External APIs
+# Palmetto — External APIs
 
-Parletto integrates with two external APIs. Both are called exclusively from the backend — the frontend never communicates with them directly.
+Palmetto integrates with two external APIs. Both are called exclusively from the backend — the frontend never communicates with them directly.
 
 ---
 
@@ -27,7 +27,7 @@ GET https://api.openweathermap.org/data/2.5/weather
 | `units` | `imperial` or `metric` | Determines temperature and wind units |
 | `appid` | API key | Required for authentication |
 
-**When called:** Every request to Parletto's `GET /api/weather` triggers this call (unless cached).
+**When called:** Every request to Palmetto's `GET /api/weather` triggers this call (unless cached).
 
 **Response transformation:** The `WeatherMapper.toWeatherDto()` method extracts and flattens the nested OpenWeather response into a flat `WeatherDto`. Key transformations:
 - `main.temp` → `temperature`
@@ -45,7 +45,7 @@ GET https://api.openweathermap.org/data/2.5/forecast
 
 Same query parameters as Current Weather.
 
-**When called:** Every request to Parletto's `GET /api/forecast` or `GET /api/forecast/hourly` triggers this call (unless cached).
+**When called:** Every request to Palmetto's `GET /api/forecast` or `GET /api/forecast/hourly` triggers this call (unless cached).
 
 **Response transformation:**
 
@@ -71,7 +71,7 @@ Cache is in-memory using NestJS `cache-manager`. TTL values are configurable via
 ### Known Limitations
 
 - **City + state format:** OpenWeather does not reliably accept US-style queries like `Austin, TX`. Use plain city names (`Austin`) or coordinates (`30.27,-97.74`).
-- **Free tier rate limit:** 60 requests per minute, 1,000,000 requests per month. Parletto's caching reduces actual API calls significantly.
+- **Free tier rate limit:** 60 requests per minute, 1,000,000 requests per month. Palmetto's caching reduces actual API calls significantly.
 - **UV Index:** May return 0 for some locations depending on OpenWeather's data availability.
 - **Precipitation:** Only reports rain volume for the last 1 hour. Snow is not currently extracted.
 
@@ -108,7 +108,7 @@ GET https://api.geoapify.com/v1/geocode/autocomplete
 | `limit` | `5` | Maximum number of suggestions |
 | `apiKey` | API key | Required for authentication |
 
-**When called:** Every request to Parletto's `GET /api/geocode` triggers this call.
+**When called:** Every request to Palmetto's `GET /api/geocode` triggers this call.
 
 **Response transformation:** The `GeocodeService` maps GeoApify's GeoJSON feature collection to an array of `GeocodeSuggestionDto`:
 

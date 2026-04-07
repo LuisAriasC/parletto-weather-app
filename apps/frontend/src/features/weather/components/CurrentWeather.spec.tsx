@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { CurrentWeather } from './CurrentWeather';
-import { WeatherDto } from '@parletto/shared';
+import { WeatherDto } from '@palmetto/shared';
 
 const mockDto: WeatherDto = {
   city: 'Austin',

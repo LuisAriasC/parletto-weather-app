@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { WeatherDto, ForecastDto, HourlyDto, Units } from '@parletto/shared';
+import { WeatherDto, ForecastDto, HourlyDto, Units } from '@palmetto/shared';
 
 export interface OpenWeatherCurrentResponse {
   name: string;

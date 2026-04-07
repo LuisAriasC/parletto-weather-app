@@ -32,7 +32,7 @@ export function Header({ sidebarOpen, onToggleSidebar }: HeaderProps) {
         <div className="flex items-center gap-2">
           <Thermometer className="h-5 w-5 text-primary" aria-hidden="true" />
           <span className="text-lg font-semibold tracking-tight text-foreground">
-            Parletto
+            Palmetto
           </span>
         </div>
       </div>

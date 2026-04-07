@@ -4,7 +4,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Observable, from, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { WeatherDto, ForecastDto, HourlyDto, Units, OPENWEATHER_BASE_URL } from '@parletto/shared';
+import { WeatherDto, ForecastDto, HourlyDto, Units, OPENWEATHER_BASE_URL } from '@palmetto/shared';
 import {
   WeatherMapper,
   OpenWeatherCurrentResponse,

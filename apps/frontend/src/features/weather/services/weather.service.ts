@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { from, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { WeatherDto, ForecastDto, HourlyDto, Units, ErrorDto } from '@parletto/shared';
+import { WeatherDto, ForecastDto, HourlyDto, Units, ErrorDto } from '@palmetto/shared';
 
 const API_BASE = import.meta.env['VITE_API_BASE_URL'] ?? '/api';
 

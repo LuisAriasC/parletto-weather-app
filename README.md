@@ -1,4 +1,4 @@
-# Parletto Weather App
+# Palmetto Weather App
 
 A full-stack weather application built as an Nx monorepo. Features a NestJS Backend-for-Frontend (BFF) that proxies the OpenWeather and GeoApify APIs, and a React frontend with autocomplete search, hourly and 5-day forecasts, dark mode, unit toggling, and recent search history.
 
@@ -174,7 +174,7 @@ To enable E2E tests in CI, add these repository secrets in **GitHub → Settings
 ## Project Structure
 
 ```
-parletto/
+palmetto/
 ├── apps/
 │   ├── backend/                    # NestJS BFF
 │   │   └── src/

@@ -1,4 +1,4 @@
-# Parletto — API Reference
+# Palmetto — API Reference
 
 All endpoints are prefixed with `/api`. In development, the Vite dev server proxies requests from `localhost:4200/api/*` to `localhost:3000/api/*`. In production, nginx proxies `/api/*` to the backend container.
 

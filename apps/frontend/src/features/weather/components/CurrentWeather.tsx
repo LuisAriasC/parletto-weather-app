@@ -1,4 +1,4 @@
-import { WeatherDto } from '@parletto/shared';
+import { WeatherDto } from '@palmetto/shared';
 import { Card, CardContent } from '@/components/ui/card';
 import { StatTile } from './StatTile';
 import {

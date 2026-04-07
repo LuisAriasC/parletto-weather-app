@@ -306,7 +306,7 @@ Expected: FAIL — module `./formatters` not found.
 Create `apps/frontend/src/features/weather/utils/formatters.ts`:
 
 ```typescript
-import { Units } from '@parletto/shared';
+import { Units } from '@palmetto/shared';
 
 const COMPASS_POINTS = [
   'N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
@@ -446,7 +446,7 @@ Expected: FAIL — TypeScript errors (missing new DTO fields on mockDto) and mis
 Replace the entire content of `apps/frontend/src/features/weather/components/CurrentWeather.tsx`:
 
 ```typescript
-import { WeatherDto } from '@parletto/shared';
+import { WeatherDto } from '@palmetto/shared';
 import { StatTile } from './StatTile';
 import {
   degreesToCompass,

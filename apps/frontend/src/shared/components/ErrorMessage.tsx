@@ -1,5 +1,5 @@
 import { AlertCircle, RefreshCw } from 'lucide-react';
-import { ErrorDto } from '@parletto/shared';
+import { ErrorDto } from '@palmetto/shared';
 import { Button } from '@/components/ui/button';
 
 const MESSAGE_MAP: Record<number, string> = {

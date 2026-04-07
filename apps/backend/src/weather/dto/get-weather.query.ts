@@ -1,5 +1,5 @@
 import { IsIn, IsNotEmpty, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
-import { Units } from '@parletto/shared';
+import { Units } from '@palmetto/shared';
 
 export class GetWeatherQuery {
   @IsString()

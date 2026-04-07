@@ -16,7 +16,7 @@ A production-quality weather application that accepts a location input and displ
 Nx monorepo with a flat apps + libs layout:
 
 ```
-parletto/
+palmetto/
 ├── apps/
 │   ├── frontend/          # React + Vite + TypeScript
 │   └── backend/           # NestJS + TypeScript
