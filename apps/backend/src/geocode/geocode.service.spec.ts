@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpService } from '@nestjs/axios';
 import { of, throwError, lastValueFrom } from 'rxjs';
-import { GEOAPIFY_AUTOCOMPLETE_URL } from '@parletto/shared';
+import { GEOAPIFY_AUTOCOMPLETE_URL } from '@palmetto/shared';
 import { GeocodeService } from './geocode.service';
 import { AppConfigService } from '../config/app-config.service';
 

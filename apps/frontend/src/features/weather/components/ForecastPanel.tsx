@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Units } from '@parletto/shared';
+import { Units } from '@palmetto/shared';
 import { useHourlyForecast } from '../hooks/useHourlyForecast';
 import { useForecast } from '../hooks/useForecast';
 import { HourlyStrip } from './HourlyStrip';

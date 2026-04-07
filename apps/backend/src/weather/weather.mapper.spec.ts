@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { WeatherMapper } from './weather.mapper';
-import { HourlyDto } from '@parletto/shared';
+import { HourlyDto } from '@palmetto/shared';
 
 const rawCurrentResponse = {
   name: 'Austin',

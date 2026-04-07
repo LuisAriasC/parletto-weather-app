@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { Response } from 'express';
-import { ErrorDto } from '@parletto/shared';
+import { ErrorDto } from '@palmetto/shared';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {

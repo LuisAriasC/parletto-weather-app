@@ -13,7 +13,7 @@
 ## File Map
 
 ```
-parletto/
+palmetto/
 ├── apps/
 │   ├── backend/src/
 │   │   ├── main.ts
@@ -103,13 +103,13 @@ parletto/
 
 - [ ] **Step 1: Create Nx workspace from Desktop (parent directory)**
 
-Run from `~/Desktop` (NOT inside parletto):
+Run from `~/Desktop` (NOT inside palmetto):
 ```bash
-npx create-nx-workspace@latest parletto \
+npx create-nx-workspace@latest palmetto \
   --preset=ts \
   --pm=npm \
   --nxCloud=skip
-cd parletto
+cd palmetto
 ```
 
 - [ ] **Step 2: Install Nx plugins for React, NestJS, and JS lib**
@@ -278,7 +278,7 @@ export * from './types/error.dto';
 {
   "compilerOptions": {
     "paths": {
-      "@parletto/shared": ["libs/shared/src/index.ts"]
+      "@palmetto/shared": ["libs/shared/src/index.ts"]
     }
   }
 }
@@ -482,7 +482,7 @@ import {
 } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { Response } from 'express';
-import { ErrorDto } from '@parletto/shared';
+import { ErrorDto } from '@palmetto/shared';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -655,7 +655,7 @@ Expected: FAIL — `WeatherMapper` not found.
 `apps/backend/src/weather/weather.mapper.ts`:
 ```typescript
 import { Injectable } from '@nestjs/common';
-import { WeatherDto, ForecastDto, Units } from '@parletto/shared';
+import { WeatherDto, ForecastDto, Units } from '@palmetto/shared';
 
 export interface OpenWeatherCurrentResponse {
   name: string;
@@ -783,7 +783,7 @@ git commit -m "feat(backend): add WeatherMapper with current and forecast aggreg
 `apps/backend/src/weather/dto/get-weather.query.ts`:
 ```typescript
 import { IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { Units } from '@parletto/shared';
+import { Units } from '@palmetto/shared';
 
 export class GetWeatherQuery {
   @IsString()
@@ -932,7 +932,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Observable, from, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { WeatherDto, ForecastDto, Units } from '@parletto/shared';
+import { WeatherDto, ForecastDto, Units } from '@palmetto/shared';
 import {
   WeatherMapper,
   OpenWeatherCurrentResponse,
@@ -1100,7 +1100,7 @@ import { Controller, Get, Query, UseInterceptors } from '@nestjs/common';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
-import { WeatherDto, ForecastDto } from '@parletto/shared';
+import { WeatherDto, ForecastDto } from '@palmetto/shared';
 import { WeatherService } from './weather.service';
 import { GetWeatherQuery } from './dto/get-weather.query';
 
@@ -1196,7 +1196,7 @@ async function bootstrap(): Promise<void> {
   app.useGlobalFilters(new GlobalExceptionFilter());
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Parletto Weather API')
+    .setTitle('Palmetto Weather API')
     .setDescription('BFF proxy for OpenWeather — current conditions and 5-day forecast')
     .setVersion('1.0')
     .build();
@@ -1375,7 +1375,7 @@ describe('settingsSlice', () => {
 `apps/frontend/src/store/settingsSlice.ts`:
 ```typescript
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Units } from '@parletto/shared';
+import { Units } from '@palmetto/shared';
 
 interface SettingsState {
   units: Units;
@@ -1533,7 +1533,7 @@ import axios, { AxiosError } from 'axios';
 import { from, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { WeatherDto, ForecastDto, Units, ErrorDto } from '@parletto/shared';
+import { WeatherDto, ForecastDto, Units, ErrorDto } from '@palmetto/shared';
 
 const API_BASE = import.meta.env['VITE_API_BASE_URL'] ?? '/api';
 
@@ -1590,7 +1590,7 @@ git commit -m "feat(frontend): add RxJS weather service using axios Observables"
 ```typescript
 import { useQuery } from '@tanstack/react-query';
 import { lastValueFrom } from 'rxjs';
-import { Units, WeatherDto, ErrorDto } from '@parletto/shared';
+import { Units, WeatherDto, ErrorDto } from '@palmetto/shared';
 import { weatherService } from '../services/weather.service';
 
 export function useCurrentWeather(location: string, units: Units) {
@@ -1610,7 +1610,7 @@ export function useCurrentWeather(location: string, units: Units) {
 ```typescript
 import { useQuery } from '@tanstack/react-query';
 import { lastValueFrom } from 'rxjs';
-import { Units, ForecastDto, ErrorDto } from '@parletto/shared';
+import { Units, ForecastDto, ErrorDto } from '@palmetto/shared';
 import { weatherService } from '../services/weather.service';
 
 export function useForecast(location: string, units: Units) {
@@ -1684,7 +1684,7 @@ Expected: FAIL.
 
 `apps/frontend/src/components/common/ErrorMessage.tsx`:
 ```typescript
-import { ErrorDto } from '@parletto/shared';
+import { ErrorDto } from '@palmetto/shared';
 
 const MESSAGE_MAP: Record<number, string> = {
   400: 'Invalid location. Please check the city name and try again.',
@@ -1946,7 +1946,7 @@ git commit -m "feat(frontend): add SearchBar with validation and RecentLocations
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { CurrentWeather } from './CurrentWeather';
-import { WeatherDto } from '@parletto/shared';
+import { WeatherDto } from '@palmetto/shared';
 
 const mockDto: WeatherDto = {
   city: 'Austin', country: 'US', temperature: 72, feelsLike: 75,
@@ -2017,7 +2017,7 @@ export function StatTile({ label, value }: StatTileProps) {
 
 `apps/frontend/src/components/weather/CurrentWeather.tsx`:
 ```typescript
-import { WeatherDto } from '@parletto/shared';
+import { WeatherDto } from '@palmetto/shared';
 import { StatTile } from './StatTile';
 
 interface CurrentWeatherProps {
@@ -2079,8 +2079,8 @@ Expected: PASS — 5 tests pass.
 
 `apps/frontend/src/components/weather/ForecastDay.tsx`:
 ```typescript
-import { ForecastDto } from '@parletto/shared';
-import { Units } from '@parletto/shared';
+import { ForecastDto } from '@palmetto/shared';
+import { Units } from '@palmetto/shared';
 
 interface ForecastDayProps {
   data: ForecastDto;
@@ -2114,7 +2114,7 @@ export function ForecastDay({ data, units }: ForecastDayProps) {
 
 `apps/frontend/src/components/weather/ForecastStrip.tsx`:
 ```typescript
-import { ForecastDto, Units } from '@parletto/shared';
+import { ForecastDto, Units } from '@palmetto/shared';
 import { ForecastDay } from './ForecastDay';
 
 interface ForecastStripProps {
@@ -2171,7 +2171,7 @@ export function Header() {
   return (
     <header className="flex h-14 items-center justify-between border-b border-gray-200 px-6 dark:border-gray-700">
       <span className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">
-        Parletto
+        Palmetto
       </span>
       <div className="flex items-center gap-3">
         <button
@@ -2240,7 +2240,7 @@ import { CurrentWeather } from '../weather/CurrentWeather';
 import { ForecastStrip } from '../weather/ForecastStrip';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 import { ErrorMessage } from '../common/ErrorMessage';
-import { ErrorDto } from '@parletto/shared';
+import { ErrorDto } from '@palmetto/shared';
 
 interface MainPanelProps {
   location: string;

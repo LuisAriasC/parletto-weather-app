@@ -1,4 +1,4 @@
-# Parletto — Environment Variables
+# Palmetto — Environment Variables
 
 ## Variable Reference
 

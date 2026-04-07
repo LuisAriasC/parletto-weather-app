@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@parletto/shared": ["libs/shared/src/index.ts"],
+      "@palmetto/shared": ["libs/shared/src/index.ts"],
       "shared": ["libs/shared/src/index.ts"],
       "@/*": ["apps/frontend/src/*"]
     }

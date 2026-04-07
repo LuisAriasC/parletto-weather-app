@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { HourlyStrip } from './HourlyStrip';
-import { HourlyDto } from '@parletto/shared';
+import { HourlyDto } from '@palmetto/shared';
 
 function makeSlot(overrides: Partial<HourlyDto> = {}): HourlyDto {
   return {

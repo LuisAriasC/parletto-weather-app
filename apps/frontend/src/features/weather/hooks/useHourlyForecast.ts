@@ -1,6 +1,6 @@
 import { lastValueFrom } from 'rxjs';
 import { useQuery } from '@tanstack/react-query';
-import { HourlyDto, ErrorDto, Units } from '@parletto/shared';
+import { HourlyDto, ErrorDto, Units } from '@palmetto/shared';
 import { weatherService } from '../services/weather.service';
 
 export function useHourlyForecast(location: string, units: Units) {

@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { of, lastValueFrom } from 'rxjs';
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
-import { HourlyDto } from '@parletto/shared';
+import { HourlyDto } from '@palmetto/shared';
 
 const mockWeatherDto = {
   city: 'Austin', country: 'US', temperature: 72, feelsLike: 75,

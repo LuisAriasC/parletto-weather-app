@@ -183,7 +183,7 @@ toHourlyDtos(raw: OpenWeatherForecastResponse): HourlyDto[] {
 }
 ```
 
-Also add `HourlyDto` to the import from `@parletto/shared` at the top of the file.
+Also add `HourlyDto` to the import from `@palmetto/shared` at the top of the file.
 
 - [ ] **Step 4: Run tests to verify they pass**
 
@@ -257,7 +257,7 @@ describe('getHourlyForecast$', () => {
 });
 ```
 
-Add `HourlyDto` to the import from `@parletto/shared` at the top of the spec file.
+Add `HourlyDto` to the import from `@palmetto/shared` at the top of the spec file.
 
 - [ ] **Step 2: Write failing controller test**
 
@@ -279,7 +279,7 @@ describe('GET /forecast/hourly', () => {
 });
 ```
 
-Add `HourlyDto` to the `@parletto/shared` import.
+Add `HourlyDto` to the `@palmetto/shared` import.
 
 - [ ] **Step 3: Run tests to verify they fail**
 
@@ -292,7 +292,7 @@ Expected: FAIL — method does not exist
 
 - [ ] **Step 4: Add service method**
 
-Open `apps/backend/src/weather/weather.service.ts`. Add `HourlyDto` to the `@parletto/shared` import. Add this method after `getForecast$`:
+Open `apps/backend/src/weather/weather.service.ts`. Add `HourlyDto` to the `@palmetto/shared` import. Add this method after `getForecast$`:
 
 ```typescript
 getHourlyForecast$(location: string, units: Units): Observable<HourlyDto[]> {
@@ -320,7 +320,7 @@ getHourlyForecast$(location: string, units: Units): Observable<HourlyDto[]> {
 
 - [ ] **Step 5: Add controller endpoint**
 
-Open `apps/backend/src/weather/weather.controller.ts`. Add `HourlyDto` to the `@parletto/shared` import. Add this method after `getForecast`:
+Open `apps/backend/src/weather/weather.controller.ts`. Add `HourlyDto` to the `@palmetto/shared` import. Add this method after `getForecast`:
 
 ```typescript
 @Get('forecast/hourly')
@@ -371,7 +371,7 @@ git commit -m "feat(backend): add GET /api/forecast/hourly endpoint"
 
 - [ ] **Step 1: Add service method**
 
-Open `apps/frontend/src/features/weather/services/weather.service.ts`. Add `HourlyDto` to the `@parletto/shared` import. Add this method to the service object (after `getForecast$`):
+Open `apps/frontend/src/features/weather/services/weather.service.ts`. Add `HourlyDto` to the `@palmetto/shared` import. Add this method to the service object (after `getForecast$`):
 
 ```typescript
 getHourlyForecast$(location: string, units: Units): Observable<HourlyDto[]> {
@@ -392,7 +392,7 @@ getHourlyForecast$(location: string, units: Units): Observable<HourlyDto[]> {
 // apps/frontend/src/features/weather/hooks/useHourlyForecast.ts
 import { lastValueFrom } from 'rxjs';
 import { useQuery } from '@tanstack/react-query';
-import { HourlyDto, ErrorDto, Units } from '@parletto/shared';
+import { HourlyDto, ErrorDto, Units } from '@palmetto/shared';
 import { weatherService } from '../services/weather.service';
 
 export function useHourlyForecast(location: string, units: Units) {
@@ -436,7 +436,7 @@ git commit -m "feat(frontend): add getHourlyForecast$ service method and useHour
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { HourlyStrip } from './HourlyStrip';
-import { HourlyDto } from '@parletto/shared';
+import { HourlyDto } from '@palmetto/shared';
 
 function makeSlot(overrides: Partial<HourlyDto> = {}): HourlyDto {
   return {
@@ -516,7 +516,7 @@ Expected: FAIL — `Cannot find module './HourlyStrip'`
 
 ```tsx
 // apps/frontend/src/features/weather/components/HourlyStrip.tsx
-import { HourlyDto, Units } from '@parletto/shared';
+import { HourlyDto, Units } from '@palmetto/shared';
 import { formatTime, degreesToCompass } from '../utils/formatters';
 
 interface HourlyStripProps {
@@ -599,7 +599,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ForecastPanel } from './ForecastPanel';
-import { HourlyDto, ForecastDto } from '@parletto/shared';
+import { HourlyDto, ForecastDto } from '@palmetto/shared';
 
 vi.mock('../hooks/useHourlyForecast');
 vi.mock('../hooks/useForecast');
@@ -696,7 +696,7 @@ Expected: FAIL — `Cannot find module './ForecastPanel'`
 ```tsx
 // apps/frontend/src/features/weather/components/ForecastPanel.tsx
 import { useState } from 'react';
-import { Units } from '@parletto/shared';
+import { Units } from '@palmetto/shared';
 import { useHourlyForecast } from '../hooks/useHourlyForecast';
 import { useForecast } from '../hooks/useForecast';
 import { HourlyStrip } from './HourlyStrip';

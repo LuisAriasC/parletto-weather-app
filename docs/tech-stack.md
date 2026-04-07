@@ -1,4 +1,4 @@
-# Parletto — Tech Stack & Development Conventions
+# Palmetto — Tech Stack & Development Conventions
 
 ## Tech Stack
 
@@ -54,7 +54,7 @@
 | Technology | Purpose |
 |------------|---------|
 | TypeScript | Interface-only package — no runtime code, no classes |
-| Path alias `@parletto/shared` | Configured in `tsconfig.base.json` and each app's vitest config |
+| Path alias `@palmetto/shared` | Configured in `tsconfig.base.json` and each app's vitest config |
 
 ---
 

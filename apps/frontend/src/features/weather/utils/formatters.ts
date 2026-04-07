@@ -1,4 +1,4 @@
-import { Units } from '@parletto/shared';
+import { Units } from '@palmetto/shared';
 
 const COMPASS_POINTS = [
   'N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',

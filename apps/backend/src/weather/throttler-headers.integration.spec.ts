@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import request from 'supertest';
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
-import { WeatherDto } from '@parletto/shared';
+import { WeatherDto } from '@palmetto/shared';
 
 const mockWeather: WeatherDto = {
   city: 'Austin',

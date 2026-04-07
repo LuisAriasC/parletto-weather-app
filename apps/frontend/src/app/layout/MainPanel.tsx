@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CloudSun } from 'lucide-react';
-import { ErrorDto } from '@parletto/shared';
+import { ErrorDto } from '@palmetto/shared';
 import { RootState, AppDispatch } from '../store';
 import { CurrentWeather, ForecastPanel, useCurrentWeather } from '../../features/weather';
 import { ErrorMessage, WeatherSkeleton } from '../../shared/components';

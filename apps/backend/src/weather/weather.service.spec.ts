@@ -9,7 +9,7 @@ import { WeatherService } from './weather.service';
 import { WeatherMapper } from './weather.mapper';
 import { AppConfigService } from '../config/app-config.service';
 import { MetricsService } from './metrics.service';
-import { HourlyDto } from '@parletto/shared';
+import { HourlyDto } from '@palmetto/shared';
 
 const mockWeatherDto = {
   city: 'Austin',

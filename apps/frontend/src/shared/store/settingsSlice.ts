@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Units } from '@parletto/shared';
+import { Units } from '@palmetto/shared';
 
 interface SettingsState {
   units: Units;

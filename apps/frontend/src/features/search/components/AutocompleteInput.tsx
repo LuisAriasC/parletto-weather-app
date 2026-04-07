@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
-import { GeocodeSuggestionDto } from '@parletto/shared';
+import { GeocodeSuggestionDto } from '@palmetto/shared';
 import { useGeocodeSuggestions } from '../hooks/useGeocodeSuggestions';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';

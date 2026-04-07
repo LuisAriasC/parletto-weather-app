@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { Observable } from 'rxjs';
-import { GeocodeSuggestionDto } from '@parletto/shared';
+import { GeocodeSuggestionDto } from '@palmetto/shared';
 import { GeocodeService } from './geocode.service';
 import { GetGeocodeQuery } from './dto/get-geocode.query';
 

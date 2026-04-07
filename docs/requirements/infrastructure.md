@@ -58,7 +58,7 @@
 - [x] Add gzip/brotli compression for responses
 
 ### Shared Library
-- [x] `@parletto/shared` exports TypeScript interfaces only (no runtime code)
+- [x] `@palmetto/shared` exports TypeScript interfaces only (no runtime code)
 - [x] Path alias configured in `tsconfig.base.json` and vitest configs
 - [x] DTOs: `WeatherDto`, `ForecastDto`, `HourlyDto`, `GeocodeSuggestionDto`, `ErrorDto`, `Units`
 

@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { of, lastValueFrom } from 'rxjs';
 import { GeocodeController } from './geocode.controller';
 import { GeocodeService } from './geocode.service';
-import { GeocodeSuggestionDto } from '@parletto/shared';
+import { GeocodeSuggestionDto } from '@palmetto/shared';
 
 const mockSuggestions: GeocodeSuggestionDto[] = [
   { placeId: 'abc123', label: 'Austin, Texas, United States', lat: 30.2672, lon: -97.7431 },

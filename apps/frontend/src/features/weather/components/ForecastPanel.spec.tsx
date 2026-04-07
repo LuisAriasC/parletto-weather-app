@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import toastReducer from '../../../shared/store/toastSlice';
 import { ForecastPanel } from './ForecastPanel';
-import { HourlyDto, ForecastDto } from '@parletto/shared';
+import { HourlyDto, ForecastDto } from '@palmetto/shared';
 
 vi.mock('../hooks/useHourlyForecast');
 vi.mock('../hooks/useForecast');

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { GeocodeSuggestionDto, GEOAPIFY_AUTOCOMPLETE_URL } from '@parletto/shared';
+import { GeocodeSuggestionDto, GEOAPIFY_AUTOCOMPLETE_URL } from '@palmetto/shared';
 import { AppConfigService } from '../config/app-config.service';
 
 interface GeoApifyFeature {

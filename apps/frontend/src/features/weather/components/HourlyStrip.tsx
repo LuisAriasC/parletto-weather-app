@@ -1,4 +1,4 @@
-import { HourlyDto, Units } from '@parletto/shared';
+import { HourlyDto, Units } from '@palmetto/shared';
 import { formatTime, degreesToCompass } from '../utils/formatters';
 
 interface HourlyStripProps {

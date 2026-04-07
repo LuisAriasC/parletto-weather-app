@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GeocodeSuggestionDto } from '@parletto/shared';
+import { GeocodeSuggestionDto } from '@palmetto/shared';
 
 const API_BASE = import.meta.env['VITE_API_BASE_URL'] ?? '/api';
 

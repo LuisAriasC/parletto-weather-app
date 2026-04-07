@@ -52,7 +52,7 @@ import { of } from 'rxjs';
 import request from 'supertest';
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
-import { WeatherDto } from '@parletto/shared';
+import { WeatherDto } from '@palmetto/shared';
 
 const mockWeather: WeatherDto = {
   city: 'Austin',
@@ -310,7 +310,7 @@ docker compose ps
 docker compose --profile prod down
 ```
 
-Expected: Both `parletto-backend-1` and `parletto-frontend-1` containers start and the app is accessible at `http://localhost`.
+Expected: Both `palmetto-backend-1` and `palmetto-frontend-1` containers start and the app is accessible at `http://localhost`.
 
 - [ ] **Step 3: Verify staging profile works identically**
 

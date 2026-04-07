@@ -8,7 +8,7 @@ import searchReducer from '../../features/search/store/searchSlice';
 import settingsReducer from '../../shared/store/settingsSlice';
 import toastReducer from '../../shared/store/toastSlice';
 import themeReducer from '../../shared/store/themeSlice';
-import { WeatherDto } from '@parletto/shared';
+import { WeatherDto } from '@palmetto/shared';
 
 vi.mock('../../features/weather/hooks/useCurrentWeather');
 vi.mock('../../features/weather/hooks/useHourlyForecast', () => ({

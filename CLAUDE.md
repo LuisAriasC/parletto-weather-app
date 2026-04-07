@@ -1,8 +1,8 @@
-# Parletto — Claude Code Guide
+# Palmetto — Claude Code Guide
 
 ## Project Overview
 
-Parletto is an Nx monorepo weather app with three packages:
+Palmetto is an Nx monorepo weather app with three packages:
 - `apps/backend` — NestJS BFF proxy to OpenWeather API and GeoApify geocoding
 - `apps/frontend` — React 19 + Vite + Redux Toolkit + React Query
 - `libs/shared` — TypeScript interfaces and constants (no runtime logic)
@@ -94,7 +94,7 @@ Both are required. Removing either breaks DI in unit tests.
 
 ## Shared Library
 
-`libs/shared` exports TypeScript interfaces and constants. Import path is `@parletto/shared`. This alias is configured in `tsconfig.base.json` and each app's vitest config.
+`libs/shared` exports TypeScript interfaces and constants. Import path is `@palmetto/shared`. This alias is configured in `tsconfig.base.json` and each app's vitest config.
 
 Available exports: `WeatherDto`, `ForecastDto`, `HourlyDto`, `GeocodeSuggestionDto`, `ErrorDto`, `Units`, `OPENWEATHER_BASE_URL`, `GEOAPIFY_AUTOCOMPLETE_URL`
 

@@ -35,7 +35,7 @@ async function bootstrap(): Promise<void> {
 
   if (process.env['NODE_ENV'] !== 'production') {
     const swaggerConfig = new DocumentBuilder()
-      .setTitle('Parletto Weather API')
+      .setTitle('Palmetto Weather API')
       .setDescription('BFF proxy for OpenWeather — current conditions and 5-day forecast')
       .setVersion('1.0')
       .build();
